@@ -8,4 +8,4 @@ urlpatterns = [
     path('create/', create),
     path('delete/', delete),
     path('<str:url_hash>/', redirect_clicks, name='redirect_clicks'),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
