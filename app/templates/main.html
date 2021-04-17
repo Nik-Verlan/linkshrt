@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>ShortLink</title>
+<body class="container">
+    <form method="POST" action="create/">
+        {% csrf_token %}
+        <p>
+            <label>Введите ссылку</label><br>
+            <input type="text" name="full_url" />
+        </p>
+        <input type="submit" value="Обработать" >
+    </form>
+    <h2>История ссылок</h2>
+    <p>{% for url in urls %}
+    Длинная ссылка: <a href="{{ url.full_url }}">{{ url.full_url }}</a><br>
+    Короткая ссылка: <a href="{{ url.url_hash }}">http://127.0.0.1:8000/{{ url.url_hash }}</a><br>
+    Кол-во кликов: {{ url.clicks }}<br>
+    Дата добавления: {{ url.created_at }}<br><br>
+        {% endfor %}</p>
+
+    <form method="POST" action="delete/">
+    {% csrf_token %}
+    <input type="submit" value="Удалить">
+
+</body>
+</html>
