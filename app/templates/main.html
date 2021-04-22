@@ -3,26 +3,58 @@
 <head>
     <meta charset="utf-8" />
     <title>ShortLink</title>
-<body class="container">
-    <form method="POST" action="create/">
+<style>
+        body {
+        background: #d6eaf8;
+        background-size: 30%;
+        color: MediumVioletRed;
+        font-family: 'Yusei Magic', sans-serif;
+        }
+
+        .gradient-button {
+          text-decoration: none;
+          display: inline-block;
+          color: white;
+          padding: 20px 30px;
+          margin: 10px 20px;
+          border-radius: 10px;
+          font-family: 'Montserrat', sans-serif;
+          text-transform: uppercase;
+          letter-spacing: 2px;
+          background-image: linear-gradient(to right, #9EEFE1 0%, #4830F0 51%, #9EEFE1 100%);
+          background-size: 200% auto;
+          box-shadow: 0 0 20px rgba(0, 0, 0, .1);
+          transition: .5s;
+        }
+        .gradient-button:hover {
+          background-position: right center;
+        }
+    </style>
+</head>
+<body>
+    <center><form method="POST" action="create/">
         {% csrf_token %}
         <p>
-            <label>Введите ссылку</label><br>
-            <input type="text" name="full_url" />
+            <h2>Введите ссылку</h2>
+            <input type="text" name="full_url" size="50"/>
         </p>
-        <input type="submit" value="Обработать" >
-    </form>
+        <input type="submit" value="Сократить" class="gradient-button">
+    </form></center>
     <h2>История ссылок</h2>
-    <p>{% for url in urls %}
-    Длинная ссылка: <a href="{{ url.full_url }}">{{ url.full_url }}</a><br>
-    Короткая ссылка: <a href="{{ url.url_hash }}">http://127.0.0.1:8000/{{ url.url_hash }}</a><br>
-    Кол-во кликов: {{ url.clicks }}<br>
-    Дата добавления: {{ url.created_at }}<br><br>
-        {% endfor %}</p>
+    {% if urls %}
+        <p>{% for url in urls %}
+        Длинная ссылка: <a href="{{ url.full_url }}">{{ url.full_url }}</a><br>
+        Короткая ссылка: <a href="{{ url.url_hash }}">http://127.0.0.1:8000/{{ url.url_hash }}</a><br>
+        Кол-во кликов: {{ url.clicks }}<br>
+        Дата добавления: {{ url.created_at }}<br><br>
+            {% endfor %}</p>
+    {% else %}
+        <p>Сокращённых ссылок пока нет</p>
+    {% endif %}
 
     <form method="POST" action="delete/">
     {% csrf_token %}
-    <input type="submit" value="Удалить">
+        <input type="submit" value="Очистить историю" class="gradient-button"></form>
 
 </body>
 </html>
